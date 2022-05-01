@@ -67,9 +67,7 @@ class CustomerTable(Table):
             self.header = next(reader)
             self.items = set()
             for code, firstname, lastname in reader:
-                # print(code, firstname, lastname)
                 if code in customer_sample:
-                    # print(code)
                     self.items.add(Customer(code, firstname, lastname))
             csv_file.close()
 
@@ -87,7 +85,6 @@ class InvoiceTable(Table):
             self.codes = set()
             for customer, code, amount, date in reader:
                 if customer in customer_sample:
-                    # print("customer", code)
                     self.items.add(Invoice(customer, code, amount, date))
                     self.codes.add(code)
             csv_file.close()
@@ -104,7 +101,6 @@ class ItemTable(Table):
             self.header = next(reader)
             self.items = set()
             for invoice, code, amount, quantity in reader:
-                # print(invoice, code)
                 if invoice in invoice_sample:
                     self.items.add(Item(invoice, code, amount, quantity))
             csv_file.close()
