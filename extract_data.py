@@ -3,6 +3,13 @@ import datetime
 
 
 class Customer:
+    """ Represents a customer.
+    Includes an init function that describes
+    the fields required to identify a customer.
+    Includes an  iter method  for creating objects
+    which can be iterated one element at a time.
+    The csv.writer will iterate through a Customer object
+    to get the cells in a row, thus trigger the __iter__ method"""
 
     def __init__(self, code, firstname, lastname):
         self.code = code
@@ -14,6 +21,13 @@ class Customer:
 
 
 class Invoice:
+    """ Represents an invoice.
+    Includes an init function that describes
+    the fields required to identify an invoice.
+    Includes an  iter method  for creating objects
+    which can be iterated one element at a time.
+    The csv.writer will iterate through an Invoice object
+    to get the cells in a row, thus trigger the __iter__ method"""
 
     def __init__(self, customer, code, amount, date):
         self.customer = customer
@@ -27,6 +41,13 @@ class Invoice:
 
 
 class Item:
+    """ Represents an invoice item.
+       Includes an init function that describes
+       the fields required to identify an invoice item.
+       Includes an  iter method  for creating objects
+       which can be iterated one element at a time.
+       The csv.writer will iterate through an Item object
+       to get the cells in a row, thus trigger the __iter__ method"""
 
     def __init__(self, invoice, code, amount, quantity):
         self.invoice = invoice
@@ -39,8 +60,9 @@ class Item:
 
 
 class Table:
-    """Some description that tells you it's abstract,
-    often listing the methods you're expected to supply."""
+    """Abstract class that represents a generic table.
+    Includes the write_csv method that takes a filename as input
+    and writes the respective rows to that file"""
 
     def __init__(self, filename):
         raise NotImplementedError("Should have implemented this")
@@ -57,8 +79,9 @@ class Table:
 
 
 class CustomerTable(Table):
-    """Some description that tells you it's abstract,
-    often listing the methods you're expected to supply."""
+    """ Subclass that inherits from class Table.
+    Represents a CustomerTable.
+    Reads from a Customer file and filters it with the customer sample."""
 
     def __init__(self, filename, customer_sample):
         with open(filename, 'r') as csv_file:
@@ -73,8 +96,10 @@ class CustomerTable(Table):
 
 
 class InvoiceTable(Table):
-    """Some description that tells you it's abstract,
-    often listing the methods you're expected to supply."""
+    """ Subclass that inherits from class Table.
+    Represents an InvoiceTable.
+    Reads from an Invoice file and filters it with the customer sample.
+    Returns an invoice code set with the filtered invoice codes"""
 
     def __init__(self, filename, customer_sample):
         with open(filename, 'r') as csv_file:
@@ -91,8 +116,9 @@ class InvoiceTable(Table):
 
 
 class ItemTable(Table):
-    """Some description that tells you it's abstract,
-    often listing the methods you're expected to supply."""
+    """Subclass that inherits from class Table.
+    Represents an ItemTable.
+    Reads from an Item file and filters it with the invoice code sample returned by InvoiceTable object."""
 
     def __init__(self, filename, invoice_sample):
         with open(filename, 'r') as csv_file:
